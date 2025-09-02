@@ -1,0 +1,1347 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leanova-X - Upskill with Premium Tech Training</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@400;500;700&display=swap"
+        rel="stylesheet">
+    <style>
+        /* CSS Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-glow: #00E5FF;
+            --primary-glow-rgb: 0, 229, 255;
+            --secondary-glow: #B536FF;
+            --bg-primary: #0A0B1A;
+            --bg-secondary: #12142B;
+            --bg-secondary-trans: rgba(18, 20, 43, 0.8);
+            --text-primary: #E0E0E0;
+            --text-secondary: #A0A0C0;
+            --border-color: rgba(0, 229, 255, 0.2);
+            --border-hover: rgba(0, 229, 255, 0.6);
+        }
+
+        /* Global Styles */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--bg-primary);
+            color: var(--text-secondary);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        #starfield {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        ::selection {
+            background-color: var(--primary-glow);
+            color: var(--bg-primary);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--text-primary);
+            font-weight: 900;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .section-subtitle {
+            background: var(--bg-secondary-trans);
+            border: 1px solid var(--border-color);
+            padding: 1.5rem 2rem;
+            transition: all 0.3s ease;
+            clip-path: polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%);
+            max-width: 650px;
+            margin: 0 auto 3rem auto;
+            text-align: center;
+        }
+
+        .section-subtitle:hover {
+            transform: translateY(-5px);
+            border-color: var(--border-hover);
+            background-color: var(--bg-secondary);
+            box-shadow: 0 0 20px rgba(var(--primary-glow-rgb), 0.15);
+        }
+
+        section {
+            padding: 80px 0;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            background-color: var(--bg-secondary-trans);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid transparent;
+            padding: 1rem 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            background-color: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-brand {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        .nav-brand span {
+            color: var(--primary-glow);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+            margin-left: auto;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding-bottom: 5px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--primary-glow);
+        }
+
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary-glow);
+        }
+
+        .nav-auth {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .btn {
+            padding: 12px 28px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid var(--primary-glow);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-glow);
+            color: var(--bg-primary);
+            box-shadow: 0 0 10px rgba(var(--primary-glow-rgb), 0.5);
+        }
+
+        .btn-primary:hover {
+            background-color: transparent;
+            color: var(--primary-glow);
+            box-shadow: 0 0 20px rgba(var(--primary-glow-rgb), 0.8);
+        }
+
+        .btn-secondary {
+            color: var(--primary-glow);
+            background: transparent;
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(var(--primary-glow-rgb), 0.1);
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            font-size: 2rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 180px 0 80px 0;
+            background-color: transparent;
+        }
+
+        .hero-content {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .hero-text {
+            flex: 1;
+        }
+
+        .hero-text h1 {
+            font-size: 3.5rem;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-text h1 span {
+            color: var(--primary-glow);
+        }
+
+        .hero-text p {
+            background: var(--bg-secondary-trans);
+            border: 1px solid var(--border-color);
+            padding: 1.5rem 2rem;
+            transition: all 0.3s ease;
+            clip-path: polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%);
+            margin-bottom: 2.5rem;
+            max-width: 500px;
+        }
+
+        .hero-text p:hover {
+            transform: translateY(-5px);
+            border-color: var(--border-hover);
+            background-color: var(--bg-secondary);
+            box-shadow: 0 0 20px rgba(var(--primary-glow-rgb), 0.15);
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .btn-video {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-primary);
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .play-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--bg-secondary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 20px rgba(var(--primary-glow-rgb), 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .btn-video:hover .play-icon {
+            transform: scale(1.1);
+        }
+
+        .hero-image {
+            flex: 1;
+            text-align: right;
+        }
+
+        .hero-image img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .hero-stats {
+            margin-top: 4rem;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .stat-item {
+            background: var(--bg-secondary-trans);
+            border: 1px solid var(--border-color);
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            clip-path: polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%);
+        }
+
+        .stat-item:hover {
+            transform: translateY(-10px);
+            border-color: var(--border-hover);
+            background-color: var(--bg-secondary);
+            box-shadow: 0 0 30px rgba(var(--primary-glow-rgb), 0.2);
+        }
+
+        .stat-item-icon {
+            width: 50px;
+            height: 50px;
+            background-color: var(--bg-secondary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem auto;
+        }
+
+        .stat-item-text h3 {
+            font-size: 1.5rem;
+            margin: 0;
+        }
+
+        .stat-item-text p {
+            margin: 0;
+            font-weight: 500;
+        }
+
+        /* Branches (Courses) Section */
+        #branches {
+            background-color: transparent;
+        }
+
+        .branches-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            perspective: 1000px;
+        }
+
+        .branch-card {
+            background-color: var(--bg-secondary-trans);
+            border: 1px solid var(--border-color);
+            padding: 2rem;
+            transition: transform 0.2s ease-out, border-color 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+            clip-path: polygon(0 15px, 15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%);
+            position: relative;
+            z-index: 1;
+            transform-style: preserve-3d;
+        }
+
+        .branch-card:hover {
+            transform: translateY(-10px) rotateX(var(--rotateX)) rotateY(var(--rotateY));
+            border-color: var(--border-hover);
+            background-color: var(--bg-secondary);
+            box-shadow: 0 0 30px rgba(var(--primary-glow-rgb), 0.2);
+        }
+
+        .branch-card-icon-wrapper {
+            font-size: 3rem;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(145deg, var(--bg-secondary), var(--bg-primary));
+            color: var(--primary-glow);
+        }
+
+        .branch-card-icon-wrapper,
+        .branch-card h3 {
+            transform: translateZ(40px);
+        }
+
+        .branch-card p {
+            transform: translateZ(30px);
+        }
+
+        .branch-card .btn {
+            transform: translateZ(20px);
+        }
+
+        .branch-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .branch-card p {
+            margin-bottom: 1.5rem;
+        }
+
+        .branch-card .btn {
+            width: 100%;
+        }
+
+        /* About Section */
+        #about {
+            background-color: transparent;
+        }
+
+        .about-content-grid {
+            display: flex;
+            align-items: center;
+            gap: 4rem;
+        }
+
+        .about-image {
+            flex: 1;
+        }
+
+        .about-image img {
+            max-width: 100%;
+            clip-path: polygon(0 20px, 20px 0, 100% 0, 100% 100%, 0 100%);
+            border: 1px solid var(--border-color);
+        }
+
+        .about-text-content {
+            flex: 1;
+        }
+
+        .about-text-content h2 {
+            text-align: left;
+            margin-bottom: 1.5rem;
+        }
+
+        .about-text-content>p {
+            background: var(--bg-secondary-trans);
+            border: 1px solid var(--border-color);
+            padding: 2rem;
+            transition: all 0.3s ease;
+            clip-path: polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%);
+        }
+
+        .about-text-content>p:hover {
+            transform: translateY(-5px);
+            border-color: var(--border-hover);
+            background-color: var(--bg-secondary);
+            box-shadow: 0 0 20px rgba(var(--primary-glow-rgb), 0.15);
+        }
+
+        .highlight-item {
+            display: flex;
+            align-items: start;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            background: var(--bg-secondary-trans);
+            border: 1px solid var(--border-color);
+            padding: 2rem;
+            transition: all 0.3s ease;
+            clip-path: polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%);
+        }
+
+        .highlight-item:hover {
+            transform: translateY(-5px);
+            border-color: var(--border-hover);
+            background-color: var(--bg-secondary);
+            box-shadow: 0 0 20px rgba(var(--primary-glow-rgb), 0.15);
+        }
+
+        .highlight-icon {
+            font-size: 1.2rem;
+            width: 40px;
+            height: 40px;
+            flex-shrink: 0;
+            background-color: rgba(var(--primary-glow-rgb), 0.1);
+            color: var(--primary-glow);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .highlight-text h4 {
+            color: var(--text-primary);
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        /* Why Choose Us Section */
+        #why-choose {
+            background-color: transparent;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-box {
+            background: var(--bg-secondary-trans);
+            border: 1px solid var(--border-color);
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+            clip-path: polygon(0 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%);
+        }
+
+        .feature-box:hover {
+            transform: translateY(-10px);
+            border-color: var(--border-hover);
+            background-color: var(--bg-secondary);
+            box-shadow: 0 0 30px rgba(var(--primary-glow-rgb), 0.2);
+        }
+
+        .feature-box-icon {
+            font-size: 2.5rem;
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 1.5rem auto;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(145deg, var(--bg-secondary), var(--bg-primary));
+            color: var(--primary-glow);
+        }
+
+        .feature-box h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, var(--secondary-glow), var(--primary-glow));
+            color: var(--bg-primary);
+            text-align: center;
+            margin: 0 20px;
+            clip-path: polygon(0 20px, 20px 0, 100% 0, 100% calc(100% - 20px), calc(100% - 20px) 100%, 0 100%);
+        }
+
+        .cta-section .container {
+            padding: 60px 20px;
+        }
+
+        .cta-section h2 {
+            color: var(--bg-primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .cta-section p {
+            color: #0A0B1A;
+            max-width: 500px;
+            margin: 0 auto 2rem auto;
+        }
+
+        .cta-section .btn-primary {
+            background-color: var(--bg-primary);
+            color: var(--primary-glow);
+        }
+
+        /* Footer */
+        .footer {
+            background-color: transparent;
+            padding-top: 80px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 1.5rem;
+            padding-bottom: 3rem;
+        }
+
+        .footer-column {
+            background: var(--bg-secondary-trans);
+            padding: 2rem;
+            border: 1px solid var(--border-color);
+            clip-path: polygon(0 15px, 15px 0, 100% 0, 100% 100%, 0 100%);
+            transition: all 0.3s ease;
+        }
+
+        .footer-column:hover {
+            transform: translateY(-10px);
+            border-color: var(--border-hover);
+            background-color: var(--bg-secondary);
+            box-shadow: 0 0 30px rgba(var(--primary-glow-rgb), 0.2);
+        }
+
+        .footer-column .nav-brand {
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+
+        .footer-column h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-glow);
+        }
+
+        .footer-bottom {
+            padding: 2rem 0;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* Cursor Particle Effect */
+        .cursor-particle {
+            position: absolute;
+            pointer-events: none;
+            border-radius: 50%;
+            background: var(--primary-glow);
+            box-shadow: 0 0 10px var(--primary-glow), 0 0 20px var(--primary-glow), 0 0 30px var(--primary-glow);
+            animation: particle-fade 1s forwards;
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+        }
+
+        @keyframes particle-fade {
+            to {
+                transform: translate(-50%, -50%) scale(0);
+                opacity: 0;
+            }
+        }
+
+        /* Scroll-in Animation */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .animate-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 992px) {
+            h2 {
+                font-size: 2rem;
+            }
+
+            .hero-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .hero-text {
+                order: 2;
+            }
+
+            .hero-image {
+                order: 1;
+                margin-bottom: 2rem;
+            }
+
+            .hero-text p {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .hero-cta {
+                justify-content: center;
+            }
+
+            .about-content-grid {
+                flex-direction: column;
+            }
+
+            .about-image {
+                margin-bottom: 2rem;
+            }
+
+            .about-text-content h2 {
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+
+            .nav-links,
+            .nav-enroll {
+                display: none;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .nav-container {
+                position: relative;
+            }
+
+            .nav-links.mobile-active {
+                display: flex;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--bg-secondary);
+                padding: 1.5rem;
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+                border-top: 1px solid var(--border-color);
+                align-items: flex-start;
+            }
+
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-stats {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .stat-item {
+                justify-content: flex-start;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .footer-grid .nav-brand {
+                text-align: center;
+            }
+
+            .footer-column {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="starfield"></canvas>
+    <header>
+        <nav class="navbar" id="navbar">
+            <div class="container nav-container">
+                <a href="#home" class="nav-brand">Leanova<span>-X</span></a>
+                <div class="nav-links" id="navLinks">
+                    <a href="#home" class="active">Home</a>
+                    <a href="#about">About Us</a>
+                    <a href="#branches">Programs</a>
+                    <a href="#why-choose">Why Us</a>
+                    <a href="#contact">Contact</a>
+                </div>
+                <div class="nav-enroll">
+                    <a href="https://forms.gle/2535VjqKmhcYC4w8A" target="_blank" class="btn btn-primary">Enroll Now</a>
+                </div>
+                <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="container">
+                <div class="hero-content animate-on-scroll">
+                    <div class="hero-text">
+                        <h1>Transform Your Career with <span>Industry-Ready Skills</span></h1>
+                        <p>Join the successful graduates who landed their dream jobs through our
+                            comprehensive internship programs.</p>
+                        <div class="hero-cta">
+                            <a href="https://forms.gle/2535VjqKmhcYC4w8A" target="_blank" class="btn btn-primary">Get
+                                Started</a>
+                            <a href="#" class="btn-video">
+                                <span class="play-icon">
+                                    <svg width="20" height="22" viewBox="0 0 20 22" fill="none"
+                                        xmlns="http://www.w3.org/2000/svg">
+                                        <path
+                                            d="M19.5 9.66987C20.1667 10.0577 20.1667 11.0123 19.5 11.4001L2.25 21.4641C1.58333 21.8519 0.75 21.3747 0.75 20.634V1.43603C0.75 0.695328 1.58333 0.218078 2.25 0.605878L19.5 9.66987Z"
+                                            fill="var(--primary-glow)" />
+                                    </svg>
+                                </span>
+                                Watch Promo
+                            </a>
+                        </div>
+                    </div>
+                    <div class="hero-image">
+                        <img src="https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                            alt="Person interacting with a glowing sphere of data, symbolizing career transformation">
+                    </div>
+                </div>
+                <div class="hero-stats animate-on-scroll">
+                    <div class="stat-item ">
+                        <div class="stat-item-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M17.25 7.5V5.25C17.25 4.42157 16.5784 3.75 15.75 3.75H8.25C7.42157 3.75 6.75 4.42157 6.75 5.25V7.5"
+                                    stroke="var(--primary-glow)" stroke-width="1.5" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path
+                                    d="M19.5 14.25V11.25C19.5 9.98858 18.5114 9 17.25 9H6.75C5.48858 9 4.5 9.98858 4.5 11.25V14.25C4.5 15.5114 5.48858 16.5 6.75 16.5H17.25C18.5114 16.5 19.5 15.5114 19.5 14.25Z"
+                                    stroke="var(--primary-glow)" stroke-width="1.5" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path d="M14.25 20.25H9.75" stroke="var(--primary-glow)" stroke-width="1.5"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </div>
+                        <div class="stat-item-text">
+                            <h3>Interactive <br> learning</h3>
+                            <!-- <p>Graduates</p> -->
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-item-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M17.25 21V18.375C17.25 16.8246 16.0254 15.6 14.475 15.6H9.525C7.97462 15.6 6.75 16.8246 6.75 18.375V21"
+                                    stroke="var(--primary-glow)" stroke-width="1.5" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                                <path
+                                    d="M12 11.625C14.0711 11.625 15.75 9.94607 15.75 7.875C15.75 5.80393 14.0711 4.125 12 4.125C9.92893 4.125 8.25 5.80393 8.25 7.875C8.25 9.94607 9.92893 11.625 12 11.625Z"
+                                    stroke="var(--primary-glow)" stroke-width="1.5" stroke-linecap="round"
+                                    stroke-linejoin="round" />
+                            </svg>
+                        </div>
+                        <div class="stat-item-text">
+                            <h3>Collaboration with <br> Industry Partners</h3>
+                            <!-- <p>Industry Partners</p> -->
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-item-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path d="M8.25 21V9.75" stroke="var(--primary-glow)" stroke-width="1.5"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M15.75 21V3" stroke="var(--primary-glow)" stroke-width="1.5"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M3.75 21V15" stroke="var(--primary-glow)" stroke-width="1.5"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M20.25 21V12" stroke="var(--primary-glow)" stroke-width="1.5"
+                                    stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
+                        </div>
+                        <div class="stat-item-text">
+                            <h3>95%</h3>
+                            <p>Placement Rate</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="branches" class="branches">
+            <div class="container">
+                <h2 class="section-title animate-on-scroll">Explore Our Premier Programs</h2>
+                <p class="section-subtitle animate-on-scroll">Select from a comprehensive range of engineering and
+                    technology programs
+                    designed for modern industry needs.</p>
+
+                <div class="branches-grid ">
+                    <div class="branch-card animate-on-scroll" data-branch="cse">
+                        <div class="branch-card-icon-wrapper">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                                <line x1="8" y1="21" x2="16" y2="21"></line>
+                                <line x1="12" y1="17" x2="12" y2="21"></line>
+                            </svg>
+                        </div>
+                        <h3>Computer Science & IT</h3>
+                        <p>Master Python, AI/ML, and Web Development with hands-on projects and industry mentorship.</p>
+                        <a href="./cse-it.html" class="btn btn-secondary">Explore Program</a>
+                    </div>
+                    <div class="branch-card animate-on-scroll" data-branch="eee">
+                        <div class="branch-card-icon-wrapper">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"></path>
+                            </svg>
+                        </div>
+                        <h3>Electrical & Electronics</h3>
+                        <p>Dive into power systems, embedded systems, IoT, and renewable energy technologies.</p>
+                        <a href="./eee.html" class="btn btn-secondary">Explore Program</a>
+                    </div>
+                    <div class="branch-card animate-on-scroll" data-branch="ece">
+                        <div class="branch-card-icon-wrapper">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M5 12.55a11 11 0 0 1 14.08 0"></path>
+                                <path d="M1.42 9a16 16 0 0 1 21.16 0"></path>
+                                <path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path>
+                                <line x1="12" y1="20" x2="12.01" y2="20"></line>
+                            </svg>
+                        </div>
+                        <h3>Electronics & Communication</h3>
+                        <p>Learn telecommunications, signal processing, VLSI design, and wireless communication.</p>
+                        <a href="./ece.html" class="btn btn-secondary">Explore Program</a>
+                    </div>
+                    <div class="branch-card animate-on-scroll" data-branch="mech">
+                        <div class="branch-card-icon-wrapper">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="3"></circle>
+                                <path
+                                    d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z">
+                                </path>
+                            </svg>
+                        </div>
+                        <h3>Mechanical Engineering</h3>
+                        <p>Explore CAD/CAM, manufacturing, robotics, and automation with industry-standard tools.</p>
+                        <a href="./mech.html" class="btn btn-secondary">Explore Program</a>
+                    </div>
+                    <div class="branch-card animate-on-scroll" data-branch="auto">
+                        <div class="branch-card-icon-wrapper">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M14 16.5V14a2 2 0 0 0-2-2h-1a2 2 0 0 0-2 2v2.5"></path>
+                                <path
+                                    d="M20.42 4.58a2.03 2.03 0 0 0-2.13-2.12l-2.62.38a1.93 1.93 0 0 1-1.4-.4L12.13 1a1.93 1.93 0 0 0-2.26 0L7.73 2.44a1.93 1.93 0 0 1-1.4.4L3.71 2.46a2.03 2.03 0 0 0-2.13 2.12l.38 2.62a1.93 1.93 0 0 1-.4 1.4L1 10.73a1.93 1.93 0 0 0 0 2.26l1.44 2.14a1.93 1.93 0 0 1 .4 1.4l-.38 2.62a2.03 2.03 0 0 0 2.13 2.12l2.62-.38a1.93 1.93 0 0 1 1.4.4l2.14 1.44a1.93 1.93 0 0 0 2.26 0l2.14-1.44a1.93 1.93 0 0 1 1.4-.4l2.62.38a2.03 2.03 0 0 0 2.13-2.12l-.38-2.62a1.93 1.93 0 0 1 .4-1.4l1.44-2.14a1.93 1.93 0 0 0 0-2.26l-1.44-2.14a1.93 1.93 0 0 1-.4-1.4Z">
+                                </path>
+                            </svg>
+                        </div>
+                        <h3>Automobile Engineering</h3>
+                        <p>Master automotive design, hybrid vehicles, autonomous systems, and future mobility.</p>
+                        <a href="./automobile.html" class="btn btn-secondary">Explore Program</a>
+                    </div>
+                    <div class="branch-card animate-on-scroll" data-branch="civil">
+                        <div class="branch-card-icon-wrapper">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M12 22V8"></path>
+                                <path d="M5 22V12"></path>
+                                <path d="M19 22V12"></path>
+                                <path d="M2 8h20"></path>
+                                <path d="M18.5 8a4.5 4.5 0 0 0-4.27-4.49"></path>
+                                <path d="M12 3.5V8"></path>
+                                <path d="M5.5 8a4.5 4.5 0 0 1 4.27-4.49"></path>
+                            </svg>
+                        </div>
+                        <h3>Civil Engineering</h3>
+                        <p>Learn structural design, construction management, and sustainable building technologies.</p>
+                        <a href="./civil.html" class="btn btn-secondary">Explore Program</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="about">
+            <div class="container">
+                <div class="about-content-grid">
+                    <div class="about-image animate-on-scroll">
+                        <img src="https://images.pexels.com/photos/8386434/pexels-photo-8386434.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                            alt="Team collaborating on a futuristic project with a glowing data interface">
+                    </div>
+                    <div class="about-text-content animate-on-scroll">
+                        <h2>Bridging the Gap Between Academia and Industry</h2>
+                        <p>We are a leading technology education company specializing in cutting-edge training. Our
+                            mission is to provide hands-on, practical skills that prepare students for real-world
+                            challenges.</p>
+                        <p>Our mission is to bridge the gap between academic learning and industry requirements by
+                            providing hands-on, practical training that prepares students for real-world challenges.</p>
+                        <div class="highlights">
+                            <div class="highlight-item">
+                                <div class="highlight-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                    </svg>
+                                </div>
+                                <div class="highlight-text">
+                                    <h4>Industry-Expert Instructors</h4>
+                                    <p>Learn from seasoned professionals with years of real-world experience.</p>
+                                </div>
+                            </div>
+                            <div class="highlight-item">
+                                <div class="highlight-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                        fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"
+                                        stroke-linejoin="round">
+                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                    </svg>
+                                </div>
+                                <div class="highlight-text">
+                                    <h4>Project-Based Learning</h4>
+                                    <p>Build a strong portfolio by working on practical, industry-relevant projects.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="why-choose" class="why-choose">
+            <div class="container">
+                <h2 class="section-title animate-on-scroll">Why Choose Leanova-X?</h2>
+                <p class="section-subtitle animate-on-scroll">We are dedicated to providing an unparalleled learning
+                    experience that
+                    drives career success.</p>
+                <div class="features-grid">
+                    <div class="feature-box animate-on-scroll">
+                        <div class="feature-box-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <circle cx="12" cy="12" r="6"></circle>
+                                <circle cx="12" cy="12" r="2"></circle>
+                            </svg>
+                        </div>
+                        <h3>Industry-Ready Training</h3>
+                        <p>Our curriculum is designed to match the demands of leading tech companies.</p>
+                    </div>
+                    <div class="feature-box animate-on-scroll">
+                        <div class="feature-box-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                        </div>
+                        <h3>Expert Mentorship</h3>
+                        <p>Receive personalized guidance from professionals with 10+ years of experience.</p>
+                    </div>
+                    <div class="feature-box animate-on-scroll">
+                        <div class="feature-box-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M4 12h16M4 6h16M4 18h16"></path>
+                            </svg>
+                        </div>
+                        <h3>Proven Success</h3>
+                        <p>Join a community with a 95% placement rate and strong industry partnerships.</p>
+                    </div>
+                    <div class="feature-box animate-on-scroll">
+                        <div class="feature-box-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect>
+                                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path>
+                            </svg>
+                        </div>
+                        <h3>Career Support</h3>
+                        <p>Get comprehensive placement assistance, from resume building to interviews.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="animate-on-scroll">
+            <div class="container">
+                <div class="cta-section">
+                    <div class="container">
+                        <h2>Ready to Start Your Journey?</h2>
+                        <p>Join thousands of students who have transformed their careers with our industry-leading
+                            programs. Enroll today and take the first step towards your dream job.</p>
+                        <a href="https://forms.gle/2535VjqKmhcYC4w8A" target="_blank" class="btn btn-primary">Get
+                            Started Today</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer id="contact" class="footer">
+        <div class="container">
+            <div class="footer-grid animate-on-scroll">
+                <div class="footer-column">
+                    <a href="#home" class="nav-brand">Leanova<span>-X</span></a>
+                    <p>Transforming careers through premium technology education and industry-ready training programs.
+                    </p>
+                </div>
+                <div class="footer-column">
+                    <h4>Programs</h4>
+                    <ul class="footer-links">
+                        <li><a href="./cse-it.html">CSE/IT</a></li>
+                        <li><a href="./eee.html">Electrical & Electronics</a></li>
+                        <li><a href="./ece.html">Electronics & Comm.</a></li>
+                        <li><a href="./mech.html">Mechanical</a></li>
+                        <li><a href="./automobile.html">Automobile</a></li>
+                        <li><a href="./civil.html">Civil</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#branches">Programs</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Contact Us</h4>
+                    <ul class="footer-links">
+                        <li><a href="mailto:pashas9380@gmail.com">✉️ pashas9380@gmail.com</a></li>
+                        <li><a href="tel:+916361960012">📱 +91 6361960012</a></li>
+                        <li><span>📍 Bangalore, India</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom animate-on-scroll">
+                <p>&copy; 2025 Leanova-X. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Mobile menu toggle
+            const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+            const navLinks = document.getElementById('navLinks');
+
+            mobileMenuToggle.addEventListener('click', () => {
+                navLinks.classList.toggle('mobile-active');
+            });
+
+            // Close mobile menu when a link is clicked
+            document.querySelectorAll('#navLinks a').forEach(link => {
+                link.addEventListener('click', () => {
+                    if (navLinks.classList.contains('mobile-active')) {
+                        navLinks.classList.remove('mobile-active');
+                    }
+                });
+            });
+
+            // Navbar shadow on scroll
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 20) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+
+            // Active nav link highlighting on scroll
+            const sections = document.querySelectorAll('section[id]');
+            const navLi = document.querySelectorAll('.nav-links a');
+
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    if (pageYOffset >= sectionTop - 150) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navLi.forEach(a => {
+                    a.classList.remove('active');
+                    if (a.getAttribute('href').includes(current)) {
+                        a.classList.add('active');
+                    }
+                });
+            });
+
+            // Animate on scroll
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            document.querySelectorAll('.animate-on-scroll').forEach(el => observer.observe(el));
+
+            // Starfield Animation
+            const canvas = document.getElementById('starfield');
+            if (canvas) {
+                const ctx = canvas.getContext('2d');
+
+                let w, h;
+                let stars = [];
+                const numStars = 800;
+                const speed = 0.5;
+
+                function init() {
+                    w = canvas.width = window.innerWidth;
+                    h = canvas.height = window.innerHeight;
+                    stars = [];
+                    for (let i = 0; i < numStars; i++) {
+                        stars.push({
+                            x: Math.random() * w - w / 2,
+                            y: Math.random() * h - h / 2,
+                            z: Math.random() * w,
+                        });
+                    }
+                }
+
+                function animate() {
+                    ctx.clearRect(0, 0, w, h);
+                    ctx.save();
+                    ctx.translate(w / 2, h / 2);
+
+                    stars.forEach(star => {
+                        star.z -= speed;
+                        if (star.z <= 0) {
+                            star.x = Math.random() * w - w / 2;
+                            star.y = Math.random() * h - h / 2;
+                            star.z = w;
+                        }
+
+                        const k = 128.0 / star.z;
+                        const px = star.x * k;
+                        const py = star.y * k;
+
+                        if (px >= -w / 2 && px <= w / 2 && py >= -h / 2 && py <= h / 2) {
+                            const d = star.z / w;
+                            const c = 1 - d * d;
+                            const size = (1 - d) * 2.5;
+                            ctx.beginPath();
+                            ctx.fillStyle = `rgba(255, 255, 255, ${c})`;
+                            ctx.arc(px, py, size, 0, Math.PI * 2);
+                            ctx.fill();
+                        }
+                    });
+                    ctx.restore();
+                    requestAnimationFrame(animate);
+                }
+                init();
+                animate();
+                window.addEventListener('resize', init);
+            }
+
+            // 3D Tilt Effect for Program Cards
+            const cards = document.querySelectorAll('.branch-card');
+            const tiltIntensity = 15;
+
+            cards.forEach(card => {
+                card.addEventListener('mousemove', (e) => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+
+                    const { width, height } = rect;
+                    const rotateX = (y / height - 0.5) * tiltIntensity * -1;
+                    const rotateY = (x / width - 0.5) * tiltIntensity;
+
+                    card.style.setProperty('--rotateX', `${rotateX}deg`);
+                    card.style.setProperty('--rotateY', `${rotateY}deg`);
+                });
+
+                card.addEventListener('mouseleave', () => {
+                    card.style.setProperty('--rotateX', '0deg');
+                    card.style.setProperty('--rotateY', '0deg');
+                });
+            });
+
+            // Glowing Particle Cursor Effect
+            let canCreateParticle = true;
+            document.addEventListener('mousemove', (e) => {
+                if (!canCreateParticle) return;
+                canCreateParticle = false;
+                setTimeout(() => {
+                    canCreateParticle = true;
+                }, 30); // Throttle particle creation
+
+                const particle = document.createElement('span');
+                particle.classList.add('cursor-particle');
+
+                const x = e.pageX;
+                const y = e.pageY;
+
+                particle.style.left = `${x}px`;
+                particle.style.top = `${y}px`;
+
+                const size = Math.random() * 6 + 2; // size between 2px and 8px
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+
+                const animationDuration = Math.random() * 0.5 + 0.5; // duration between 0.5s and 1s
+                particle.style.animationDuration = `${animationDuration}s`;
+
+                document.body.appendChild(particle);
+
+                setTimeout(() => {
+                    particle.remove();
+                }, animationDuration * 1000);
+            });
+        });
+    </script>
+</body>
+
+</html>
